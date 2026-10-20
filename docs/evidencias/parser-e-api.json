@@ -1,0 +1,73 @@
+{
+  "rss": [
+    {
+      "source": "mmo",
+      "parsed": 30,
+      "oldest": "2026-10-11",
+      "newest": "2026-10-19",
+      "unknownEmployer": 11,
+      "unknownDeadline": 30,
+      "unverified": true,
+      "duplicates": 0
+    },
+    {
+      "source": "mmo-estagios",
+      "parsed": 30,
+      "oldest": "2024-12-12",
+      "newest": "2026-09-29",
+      "unknownEmployer": 9,
+      "unknownDeadline": 30,
+      "unverified": true,
+      "duplicates": 0
+    },
+    {
+      "source": "sovagas",
+      "parsed": 9,
+      "oldest": "2026-10-13",
+      "newest": "2026-10-19",
+      "unknownEmployer": 3,
+      "unknownDeadline": 9,
+      "unverified": true,
+      "duplicates": 0
+    }
+  ],
+  "api": {
+    "status": 200,
+    "count": 49,
+    "sources": [
+      {
+        "id": "src-mmo-mz",
+        "status": "sincronizado",
+        "message": "Consulta concluída: 24 anúncios de vagas e estágios recolhidos em Moçambique (MMO Emprego).",
+        "count": 24,
+        "syncedAt": "2026-10-19T17:19:02.469Z"
+      },
+      {
+        "id": "src-sovagas-mz",
+        "status": "sincronizado",
+        "message": "Consulta concluída: 9 anúncios e concursos em Moçambique (SoVagas).",
+        "count": 9,
+        "syncedAt": "2026-10-19T17:19:02.469Z"
+      },
+      {
+        "id": "src-remotive-tech",
+        "status": "sincronizado",
+        "message": "Consulta concluída: 8 anúncios remotos recolhidos da API Remotive.",
+        "count": 8,
+        "syncedAt": "2026-10-19T17:19:02.469Z"
+      },
+      {
+        "id": "src-jobicy-remote",
+        "status": "sincronizado",
+        "message": "Consulta concluída: 8 vagas remotas internacionais obtidas da API Jobicy.",
+        "count": 8,
+        "syncedAt": "2026-10-19T17:19:02.469Z"
+      }
+    ],
+    "allImported": true,
+    "internalUrlStatus": 400,
+    "manualStatus": 200,
+    "manualProvenance": "manual_unverified",
+    "manualAvailability": "Por confirmar"
+  }
+}

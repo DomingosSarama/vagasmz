@@ -1,0 +1,18 @@
+# One free web service; no paid database, disk or automatic deployment.
+services:
+  - type: web
+    name: vagasmz
+    runtime: node
+    plan: free
+    region: frankfurt
+    repo: https://github.com/DomingosSarama/vagasmz
+    branch: codex/integracao-ai-studio
+    autoDeployTrigger: 'off'
+    buildCommand: npm ci --include=dev && npm run check && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: '24.22.0'

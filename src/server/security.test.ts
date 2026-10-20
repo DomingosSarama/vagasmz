@@ -5,7 +5,7 @@ import { once } from 'node:events';
 import { createApplication } from '../../server.ts';
 import { readRuntimeConfig } from './runtime.ts';
 async function serve(options:Parameters<typeof createApplication>[0]={}) {
-  const app=await createApplication({production:true,runtime:readRuntimeConfig({}),sync:async()=>({syncedAt:new Date().toISOString(),jobs:[],sourceReports:[]}),...options});
+  const app=await createApplication({production:true,runtime:readRuntimeConfig({}),access:{enabled:false},sync:async()=>({syncedAt:new Date().toISOString(),jobs:[],sourceReports:[]}),...options});
   const server=app.listen(0,'127.0.0.1');await once(server,'listening');
   const base=`http://127.0.0.1:${(server.address() as any).port}`;
   return {base,close:()=>new Promise<void>((resolve,reject)=>server.close(error=>error?reject(error):resolve()))};

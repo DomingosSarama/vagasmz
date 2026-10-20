@@ -1,6 +1,30 @@
 # Publicação gratuita do VagasMZ
 
-Publicado em 20 de Outubro de 2026: **[https://vagasmz.onrender.com](https://vagasmz.onrender.com)**.
+Endereço do site privado: **[https://vagasmz.onrender.com](https://vagasmz.onrender.com)**. Publicação inicial em 20 de Outubro de 2026.
+
+## Entrada do proprietário
+
+O servidor exige autenticação para todas as páginas, APIs e ficheiros da aplicação.
+Não existe criação pública de contas. Configurar `VAGASMZ_ACCESS_PASSWORD` como
+variável secreta no Render, com uma palavra-passe exclusiva de 16 a 128 caracteres.
+Não colocar o valor no GitHub, no código cliente, em `VITE_*` ou em URLs.
+Sem configuração válida, o site não entrega o conteúdo, mesmo que o processo esteja saudável.
+
+Os cookies de sessão são HttpOnly, Secure em HTTPS e SameSite=Strict. A sessão
+expira por inactividade após 30 minutos, tem duração máxima de oito horas e é
+revogada no servidor quando se usa «Sair da sessão». As sessões residem em memória,
+com quantidade limitada: reinícios e suspensão da instância podem exigir nova entrada.
+Tentativas repetidas de entrada são limitadas e os formulários têm protecção contra CSRF.
+
+O acesso privado requer Internet. A antiga cache offline é removida quando o
+navegador recebe a actualização; os dados pessoais em IndexedDB são preservados.
+Cópias anteriormente descarregadas e o conteúdo de um repositório GitHub público
+continuam fora do alcance desta restrição de acesso ao servidor.
+
+`/healthz` só devolve o estado mínimo do processo e permanece público para o Render.
+A página de entrada e o código de limpeza das caches também são públicos, sem
+catálogo, perfis ou dados pessoais. A monitorização do serviço continua no painel
+privado do Render, em Metrics, Logs e Deploys, conforme as funcionalidades do plano Free.
 
 Um único Web Service do Render no plano **Free**, a partir de `DomingosSarama/vagasmz`, branch `codex/integracao-ai-studio`. Versão inicial da aplicação: `13b058624c91074c1865f1c0ccf62bce8833b4ba`.
 
@@ -27,6 +51,7 @@ Configuração do serviço:
 | Variável explícita | `NODE_ENV=production` |
 | Versão explícita | `NODE_VERSION=24.22.0` |
 | Auto-Deploy | **Off** |
+| Segredo de acesso | `VAGASMZ_ACCESS_PASSWORD` (definido apenas no painel) |
 
 O servidor lê `PORT` e o endereço `RENDER_EXTERNAL_URL` fornecidos pelo Render. Aceita apenas o domínio público exacto, conserva os bloqueios a ficheiros internos, valida a origem dos pedidos e encaminha HTTP público para HTTPS. A confiança em um proxy aplica-se ao ambiente Render; por defeito, o modo local permanece em `127.0.0.1`.
 
@@ -50,11 +75,19 @@ Manter o serviço no plano **Free** e não activar recursos pagos ou recargas au
 - Os dados locais aparecem antes de esperar pelos feeds. Pedidos à API têm limite de tempo; uma falha de rede conserva o catálogo já guardado. As importações são unificadas numa transacção para não perder actualizações concorrentes.
 - As verificações do GitHub Actions e os 50 testes executados no Render passaram na versão inicial. A verificação pública confirmou o funcionamento do servidor e da recolha de oportunidades.
 
-## Validação da publicação inicial
+## Validação da publicação inicial pública (histórico)
 
 **50 testes aprovados**, incluindo os testes anteriores e novos casos de configuração Render, HTTPS, Host/Origin, proxy, health check, limitação por cliente, ligações lentas/canceladas e importações concorrentes. A verificação de tipos e a compilação de produção passaram. Mantém-se um aviso de dimensão do bundle, sem erro de compilação.
 
 O endereço público respondeu com sucesso na página inicial e em `/healthz`. A API devolveu 49 oportunidades, provenientes de quatro fontes consultadas com sucesso no momento da verificação; a quantidade varia com as fontes. Os anúncios permanecem por confirmar, sem equivaler a validação pela entidade empregadora. Os pedidos a `/.env`, `/server.ts` e `/package.json` devolveram 404. A pesquisa por empresa, a mudança de tema e a gravação/remoção de favoritos foram verificadas no navegador; o layout móvel foi verificado a 390 px, sem excesso horizontal.
+
+## Validação do acesso privado
+
+**62 testes aprovados**: os 50 anteriores e 12 testes de acesso privado. Incluem
+bloqueio anónimo das páginas/API/ficheiros, configuração ausente ou fraca, cookies
+forjados e duplicados, CSRF, tentativas repetidas, expiração por inactividade e
+tempo absoluto, revogação na saída, reinício, limites do formulário e remoção
+da antiga cache offline. A versão privada não expõe a API de vagas sem sessão.
 
 ## Referências do fornecedor
 

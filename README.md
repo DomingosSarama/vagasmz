@@ -1,8 +1,30 @@
 # vagasmz
 Plataforma inteligente de vagas de emprego e estágios em Moçambique.
 
-Implementação importada do Google AI Studio, preparada localmente na branch
-`codex/integracao-ai-studio`. A main original foi conservada.
+Aplicação privada para pesquisar e acompanhar oportunidades, com código na branch
+`codex/integracao-ai-studio` e alojamento gratuito no Render.
+
+## Acesso privado e monitorização
+
+O endereço é [vagasmz.onrender.com](https://vagasmz.onrender.com). Em produção,
+as páginas, ficheiros e APIs exigem uma sessão do proprietário. A palavra-passe
+é configurada exclusivamente como variável secreta `VAGASMZ_ACCESS_PASSWORD`
+no painel do Render, com 16 a 128 caracteres; nunca deve entrar no repositório,
+em variáveis `VITE_*`, em URLs ou em mensagens de erro. Sem credenciais válidas,
+o acesso permanece bloqueado. Não existe registo público de contas.
+
+As sessões usam cookies HttpOnly, Secure em HTTPS e SameSite=Strict, expiram
+após 30 minutos de inactividade ou oito horas no total e são revogadas ao sair.
+Um reinício do serviço também exige nova entrada. A opção «Sair da sessão» está
+no menu do perfil. A API mínima `/healthz` mantém-se pública para o alojamento.
+
+O acesso privado exige Internet. A antiga cache/PWA offline é retirada sem
+apagar os dados pessoais do IndexedDB. Cópias que já tenham sido descarregadas
+antes da restrição não podem ser revogadas remotamente. A privacidade do site
+é independente da visibilidade do repositório GitHub.
+
+A monitorização técnica (estado, publicações, consumo e registos do servidor)
+fica no painel privado do Render, acessível pela conta que gere o serviço.
 
 ## Executar localmente
 
@@ -34,8 +56,7 @@ permanece no ZIP de origem, fora desta integração.
 A configuração do plano gratuito do Render está em [render.yaml](render.yaml).
 O site e a consulta das fontes funcionam no mesmo serviço, com HTTPS. Consulta os
 [passos de publicação e limites gratuitos](docs/PUBLICACAO-GRATUITA.md).
-A branch pode ser publicada mantendo a main intacta. O link público só será confirmado
-após a criação do serviço e os testes no alojamento.
+A publicação usa a branch de integração, mantendo a main intacta.
 
 ## Dados e funcionalidades
 
@@ -43,8 +64,9 @@ Pesquisa e filtros, catálogo, estágios, favoritos com notas, candidaturas em l
 contactos, entrevistas, checklist, perfil, alertas locais, cartas por modelo,
 exportação PDF/calendário, backup JSON e PWA foram mantidos.
 
-Os dados pessoais ficam no IndexedDB do navegador, por origem/dispositivo. Não há conta,
-login, envio automático de candidaturas nem sincronização de perfis entre dispositivos.
+Os dados pessoais ficam no IndexedDB do navegador, por origem/dispositivo. A entrada
+privada protege o acesso ao site; não há envio automático de candidaturas nem
+sincronização de perfis entre dispositivos.
 O ZIP de código não transporta o conteúdo do IndexedDB de outra instalação.
 
 As seis vagas incluídas são exemplos identificados e ocultos por defeito. Uma nova
@@ -67,8 +89,8 @@ O visual da imagem de referência já foi aplicado localmente: sidebar, barra su
 hero da ponte, pesquisa verde e cartões. A documentação de análise/plano conserva
 o diagnóstico anterior; o registo do redesign descreve a implementação mais recente.
 
-Esta branch foi preparada para revisão local. Push, abertura de PR e publicação
-dependem da aprovação explícita do proprietário. Merge na main exige aprovação separada.
+As alterações são revistas na branch de integração. As publicações são manuais,
+independentes do merge na main.
 
 ## Revisão funcional e de segurança
 

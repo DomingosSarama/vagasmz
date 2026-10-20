@@ -18,6 +18,7 @@ export async function fetchApiJson<T>(
       cache: 'no-store',
       credentials: 'same-origin',
     });
+    if (response.status === 401 && typeof window !== 'undefined') window.location.replace('/login');
     const data = await response.json() as T;
     return { ok: response.ok, status: response.status, data };
   } finally {

@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { readRuntimeConfig, type RuntimeConfig } from './src/server/runtime.ts';
 import { installSecurity, safeErrorHandler } from './src/server/security.ts';
+import { installPrivateAccess, type PrivateAccessOptions } from './src/server/privateAccess.ts';
 import { manualImportSchema, parseImportedJobs } from './src/utils/validation.ts';
 import { fetchSourceText, validateFetchTarget } from './src/server/safeFetch.ts';
 import express from 'express';
@@ -347,13 +348,15 @@ async function performRealTimeSync(forceRefresh = false): Promise<SyncPayload> {
   try { return await activeSyncPromise; } finally { activeSyncPromise = null; }
 }
 
-export async function createApplication(options: {production?:boolean; sync?:typeof performRealTimeSync; fetchSource?:typeof fetchSourceText; rateLimit?:number; runtime?:RuntimeConfig} = {}) {
+export async function createApplication(options: {production?:boolean; sync?:typeof performRealTimeSync; fetchSource?:typeof fetchSourceText; rateLimit?:number; runtime?:RuntimeConfig; access?:PrivateAccessOptions} = {}) {
   const app = express();
   const production = options.production ?? process.env.NODE_ENV === 'production';
   const sync = options.sync || performRealTimeSync;
   const fetchSource = options.fetchSource || fetchSourceText;
-  installSecurity(app,production,options.rateLimit,options.runtime || readRuntimeConfig());
+  const runtime = options.runtime || readRuntimeConfig();
+  installSecurity(app,production,options.rateLimit,runtime);
   app.get('/healthz',(_req,res) => res.json({status:'ok'}));
+  await installPrivateAccess(app, options.access || {enabled:production || Boolean(process.env.VAGASMZ_ACCESS_PASSWORD), password:process.env.VAGASMZ_ACCESS_PASSWORD, publicOrigin:runtime.publicOrigin});
   app.use(express.json({limit:'256kb',strict:true}));
   // Endpoint para sincronizar fontes públicas em tempo real (GET ou POST)
   app.post('/api/sources/sync', async (req, res) => {
@@ -475,7 +478,7 @@ export async function createApplication(options: {production?:boolean; sync?:typ
       if(/(?:^|\/)(?:\.[^/]+|src|docs|node_modules)(?:\/|$)|\.(?:map|ts|tsx|jsonl|env|md|lock|log|pem|key)$|^\/(?:package(?:-lock)?\.json|tsconfig\.json)/i.test(req.path)) {res.status(404).end();return;}
       next();
     });
-    app.use(express.static(distPath,{dotfiles:'deny',index:'index.html'}));
+    app.use(express.static(distPath,{dotfiles:'deny',index:'index.html',cacheControl:false,etag:false,lastModified:false}));
     app.get('/',(_req,res) => res.sendFile(path.join(distPath,'index.html')));
     app.use((_req,res) => res.status(404).send('Página não encontrada.'));
   }

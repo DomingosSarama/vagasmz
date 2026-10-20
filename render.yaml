@@ -16,3 +16,5 @@ services:
         value: production
       - key: NODE_VERSION
         value: '24.22.0'
+      - key: VAGASMZ_ACCESS_PASSWORD
+        sync: false

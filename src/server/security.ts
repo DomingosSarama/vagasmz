@@ -7,7 +7,9 @@ export function installSecurity(app:Express,production:boolean,limit=60,runtime?
   const requests = new Map<string,{start:number,count:number}>();
   app.use((req:Request,res:Response,next:NextFunction) => {
     res.setHeader('X-Content-Type-Options','nosniff');
-    res.setHeader('Referrer-Policy','no-referrer');
+    // Same-origin form POSTs must retain their Origin for CSRF validation.
+    // No referrer is sent when following links to external vacancy sources.
+    res.setHeader('Referrer-Policy','same-origin');
     res.setHeader('X-Frame-Options','SAMEORIGIN');
     res.setHeader('Permissions-Policy','camera=(), microphone=(), geolocation=()');
     if(production) res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'");

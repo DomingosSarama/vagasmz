@@ -622,7 +622,7 @@ export const DataSourcesAndSettingsView: React.FC<DataSourcesAndSettingsViewProp
               <span>Dados Privados no Navegador</span>
             </div>
             <p>
-              O teu perfil, vagas guardadas, notas e candidaturas ficam guardados neste navegador, neste dispositivo e continuam acessíveis offline.
+              O teu perfil, vagas guardadas, notas e candidaturas ficam guardados neste navegador, neste dispositivo. O acesso privado ao site exige ligação à Internet e uma sessão válida.
             </p>
           </div>
           <div className="p-3.5 rounded-lg border border-[var(--border-color)] bg-[var(--surface-bg)] space-y-2">

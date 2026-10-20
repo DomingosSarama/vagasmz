@@ -1,0 +1,6 @@
+{
+  "name": "VagasMZ — Emprego e Estágios em Moçambique",
+  "description": "Plataforma profissional moçambicana para descobrir vagas de emprego, estágios profissionais, programas de trainees e gerir candidaturas de carreira.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

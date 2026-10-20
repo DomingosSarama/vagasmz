@@ -1,0 +1,50 @@
+{
+  "checked_at_utc": "2026-10-19T17:13:10.415907+00:00",
+  "results": [
+    {
+      "source": "mmo",
+      "url": "https://emprego.mmo.co.mz/feed/",
+      "status": 200,
+      "content_type": "application/rss+xml; charset=UTF-8",
+      "bytes": 176535,
+      "final_url": "https://emprego.mmo.co.mz/feed/",
+      "items": 30
+    },
+    {
+      "source": "mmo-estagios",
+      "url": "https://emprego.mmo.co.mz/?s=estagio&post_type=job_listing&feed=rss2",
+      "status": 200,
+      "content_type": "application/rss+xml; charset=UTF-8",
+      "bytes": 172615,
+      "final_url": "https://emprego.mmo.co.mz/?s=estagio&post_type=job_listing&feed=rss2",
+      "items": 30
+    },
+    {
+      "source": "sovagas",
+      "url": "https://sovagas.co.mz/feed/",
+      "status": 200,
+      "content_type": "application/rss+xml; charset=UTF-8",
+      "bytes": 16433,
+      "final_url": "https://sovagas.co.mz/feed/",
+      "items": 10
+    },
+    {
+      "source": "remotive",
+      "url": "https://remotive.com/api/remote-jobs?limit=8",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 166006,
+      "final_url": "https://remotive.com/api/remote-jobs?limit=8",
+      "items": 12
+    },
+    {
+      "source": "jobicy",
+      "url": "https://jobicy.com/api/v2/remote-jobs?count=8",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 80522,
+      "final_url": "https://jobicy.com/api/v2/remote-jobs?count=8",
+      "items": 8
+    }
+  ]
+}

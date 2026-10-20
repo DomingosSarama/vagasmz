@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
 import vm from 'node:vm';
+import { fileURLToPath } from 'node:url';
 import { createApplication } from '../../server.ts';
 import { readRuntimeConfig } from './runtime.ts';
 import { RETIRE_WORKER, type PrivateAccessOptions } from './privateAccess.ts';
@@ -11,7 +12,7 @@ const PASSWORD = 'test-only-private-access-password-42';
 async function serve(access: Partial<PrivateAccessOptions> = {}, hosted = false) {
   let syncCalls = 0;
   const runtime = readRuntimeConfig(hosted ? {RENDER:'true',RENDER_EXTERNAL_URL:'https://private.example.com'} : {});
-  const app = await createApplication({production:true,runtime,access:{enabled:true,password:PASSWORD,publicOrigin:runtime.publicOrigin,...access},sync:async()=>{syncCalls++; return {syncedAt:new Date().toISOString(),jobs:[],sourceReports:[]};}});
+  const app = await createApplication({production:true,runtime,staticDirectory:fileURLToPath(new URL('../../public/',import.meta.url)),access:{enabled:true,password:PASSWORD,publicOrigin:runtime.publicOrigin,...access},sync:async()=>{syncCalls++; return {syncedAt:new Date().toISOString(),jobs:[],sourceReports:[]};}});
   const server = app.listen(0,'127.0.0.1'); await once(server,'listening');
   const base = `http://127.0.0.1:${(server.address() as {port:number}).port}`;
   const origin = runtime.publicOrigin || base;

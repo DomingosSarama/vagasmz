@@ -348,7 +348,7 @@ async function performRealTimeSync(forceRefresh = false): Promise<SyncPayload> {
   try { return await activeSyncPromise; } finally { activeSyncPromise = null; }
 }
 
-export async function createApplication(options: {production?:boolean; sync?:typeof performRealTimeSync; fetchSource?:typeof fetchSourceText; rateLimit?:number; runtime?:RuntimeConfig; access?:PrivateAccessOptions} = {}) {
+export async function createApplication(options: {production?:boolean; sync?:typeof performRealTimeSync; fetchSource?:typeof fetchSourceText; rateLimit?:number; runtime?:RuntimeConfig; access?:PrivateAccessOptions; staticDirectory?:string} = {}) {
   const app = express();
   const production = options.production ?? process.env.NODE_ENV === 'production';
   const sync = options.sync || performRealTimeSync;
@@ -473,7 +473,7 @@ export async function createApplication(options: {production?:boolean; sync?:typ
     const vite = await createViteServer({server:{middlewareMode:true,fs:{strict:true,allow:[__dirname],deny:['**/.git/**','**/.env*','**/*.pem','**/*.key']}},appType:'spa'});
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(__dirname,'dist');
+    const distPath = options.staticDirectory || path.join(__dirname,'dist');
     app.use((req,res,next) => {
       if(/(?:^|\/)(?:\.[^/]+|src|docs|node_modules)(?:\/|$)|\.(?:map|ts|tsx|jsonl|env|md|lock|log|pem|key)$|^\/(?:package(?:-lock)?\.json|tsconfig\.json)/i.test(req.path)) {res.status(404).end();return;}
       next();
